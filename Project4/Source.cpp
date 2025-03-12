@@ -1,4 +1,4 @@
-#include<Windows.h>
+п»ї#include<Windows.h>
 #include<iostream>
 #include<conio.h>
 #include<thread>
@@ -87,14 +87,16 @@ public:
 		return consumption_per_second;
 	}
 
-	double set_consumption_per_second(int speed )
+	double set_consumption_per_second(int speed)
 	{
 		if (speed == 0)			this->consumption_per_second = DEFAULT_CONSUMPTION_PER_SECOND;
 		else if (speed < 60)	this->consumption_per_second = DEFAULT_CONSUMPTION_PER_SECOND * 20 / 3;
 		else if (speed < 100)	this->consumption_per_second = DEFAULT_CONSUMPTION_PER_SECOND * 14 / 3;
 		else if (speed < 140)	this->consumption_per_second = DEFAULT_CONSUMPTION_PER_SECOND * 20 / 3;
-		else if(speed < 200)	this->consumption_per_second = DEFAULT_CONSUMPTION_PER_SECOND * 25 / 3;
+		else if (speed < 200)	this->consumption_per_second = DEFAULT_CONSUMPTION_PER_SECOND * 25 / 3;
 		else					this->consumption_per_second = DEFAULT_CONSUMPTION_PER_SECOND * 10;
+		return speed;
+
 	}
 
 	//					Constructors:
@@ -188,7 +190,7 @@ public:
 		{
 			control.panel_thread.join();
 			system("CLS");
-			cout << "Вы вышли мз машины" << endl;
+			cout << "Р’С‹ РІС‹С€Р»Рё РјР· РјР°С€РёРЅС‹" << endl;
 		}
 	}
 
@@ -222,7 +224,7 @@ public:
 	}
 	void engine_idle()
 	{
-		while (tank.give_fuel(engine.get_consumption_per_second(this -> speed)) && engine.started())
+		while (tank.give_fuel(engine.set_consumption_per_second(this->speed)) && engine.started())
 			std::this_thread::sleep_for(1s);
 	}
 	void start()
@@ -234,7 +236,7 @@ public:
 		}
 		else
 		{
-			cout << "Проверьте уровент топлива" << endl;
+			cout << "РџСЂРѕРІРµСЂСЊС‚Рµ СѓСЂРѕРІРµРЅС‚ С‚РѕРїР»РёРІР°" << endl;
 		}
 	}
 	void stop()
@@ -291,20 +293,20 @@ public:
 				case Enter:
 					driver_inside ? get_out() : get_in();
 					break;
-				case 'F':	//Fill - заправить
+				case 'F':	//Fill - Р·Р°РїСЂР°РІРёС‚СЊ
 				case 'f':
 					if (engine.started() || driver_inside)
 					{
-						cout << "Для начала заглушите мотор и выйдите из машины" << endl;
+						cout << "Р”Р»СЏ РЅР°С‡Р°Р»Р° Р·Р°РіР»СѓС€РёС‚Рµ РјРѕС‚РѕСЂ Рё РІС‹Р№РґРёС‚Рµ РёР· РјР°С€РёРЅС‹" << endl;
 					}
 					else
 					{
 						double fuel_level;
-						cout << "Введите объем топлива: "; cin >> fuel_level;
+						cout << "Р’РІРµРґРёС‚Рµ РѕР±СЉРµРј С‚РѕРїР»РёРІР°: "; cin >> fuel_level;
 						tank.fill(fuel_level);
 					}
 					break;
-				case 'I':	//Ignition - зажигание
+				case 'I':	//Ignition - Р·Р°Р¶РёРіР°РЅРёРµ
 				case 'i':
 					if (driver_inside)engine.started() ? stop() : start();
 					break;
@@ -331,7 +333,7 @@ public:
 	}
 };
 
-//#define TANK_CHECK	//Определяем TANK_CHECK
+//#define TANK_CHECK	//РћРїСЂРµРґРµР»СЏРµРј TANK_CHECK
 //#define ENGINE_CHECK
 
 void main()
@@ -344,7 +346,7 @@ void main()
 	int fuel;
 	do
 	{
-		cout << "Введите объем топлива: "; cin >> fuel;
+		cout << "Р’РІРµРґРёС‚Рµ РѕР±СЉРµРј С‚РѕРїР»РёРІР°: "; cin >> fuel;
 		tank.fill(fuel);
 		tank.info();
 	} while (fuel > 0);
